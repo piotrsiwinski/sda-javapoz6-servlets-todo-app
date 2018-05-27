@@ -51,6 +51,7 @@
                 <li><a href="/home">Strona główna</a></li>
                 <li><a href="/about">O nas </a></li>
                 <li><a href="/contact">Kontakt</a></li>
+                <li><a href="/todo">Lista todo</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">Dropdown <span

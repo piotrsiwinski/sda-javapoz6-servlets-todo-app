@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="sda-javapoz6-servlet-jsp-todolist:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/sda_javapoz6_servlet_jsp_todolist_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="sda-javapoz6-servlet-jsp-todolist/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="sda-javapoz6-servlet-jsp-todolist" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

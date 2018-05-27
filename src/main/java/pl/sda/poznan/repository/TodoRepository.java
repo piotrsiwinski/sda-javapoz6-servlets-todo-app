@@ -14,7 +14,9 @@ public class TodoRepository {
   }
 
   public List<TodoItem> getAll() {
-    return null;
+    return entityManager
+        .createQuery("select td from TodoItem td", TodoItem.class)
+        .getResultList();
   }
 
   public Optional<TodoItem> getById(Long id) {
@@ -26,6 +28,9 @@ public class TodoRepository {
   }
 
   public void save(TodoItem todoItem) {
+    entityManager.getTransaction().begin();
+    entityManager.persist(todoItem);
+    entityManager.getTransaction().commit();
   }
 
 

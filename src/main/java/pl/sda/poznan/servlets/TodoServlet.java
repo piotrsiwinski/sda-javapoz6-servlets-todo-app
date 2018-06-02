@@ -24,16 +24,11 @@ public class TodoServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-//    todo: delete this
-    TodoItem todoItem = new TodoItem();
-    todoItem.setTitle("Kupic kwiaty");
-    todoItem.setDescription("Fajny opis");
-    todoService.save(todoItem);
-
     List<TodoItem> allTodos = todoService.getAllTodos();
     req.setAttribute("todos", allTodos);
     req
         .getRequestDispatcher("/todo/index.jsp")
         .forward(req, resp);
   }
+
 }

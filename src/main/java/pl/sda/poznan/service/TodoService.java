@@ -19,4 +19,11 @@ public class TodoService {
   public void save(TodoItem todoItem) {
     this.todoRepository.save(todoItem);
   }
+
+  public TodoItem getById(Long id) {
+    //todo: subclass Runtime exception to TodoNotPresentException
+    return todoRepository
+            .getById(id)
+            .orElseThrow(RuntimeException::new);
+  }
 }

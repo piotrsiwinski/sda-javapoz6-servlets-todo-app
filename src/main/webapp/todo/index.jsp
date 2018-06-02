@@ -11,12 +11,12 @@
     #todocontainer {
         margin-top: 20px;
     }
-</style>  <%-- todo: dodać style--%>
+</style>  <%-- todo: przenieść style do oddzielnego pliku .css --%>
 
 <t:wrapper>
-    <div id="todocontainer" class="container">   <%-- todo: dodać id--%>
+    <div id="todocontainer" class="container">
 
-        <h1 id="todoheader"> Moje zadania </h1>  <%-- todo: dodać id--%>
+        <h1 id="todoheader"> Moje zadania </h1>
         <c:if test="${sessionScope.todo_created eq true}">
             <div class="alert alert-success">
                 Udało się dodać nowe zadanie!
@@ -50,8 +50,9 @@
                         <td><c:out value="${todo.title}"/></td>
                         <td><c:out value="${todo.description}"/></td>
                         <td><c:out value="${todo.startDate}"/></td>
-                        <td><a href="#">Edytuj</a> | <a href="#">Szczegóły</a> | <a
-                                href="#">Usuń</a></td>
+                        <td><a href="#">Edytuj</a> |
+                            <a href="#">Szczegóły</a> |
+                            <a href="/todo/delete?id=<c:out value="${todo.id}"/>">Usuń</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

@@ -12,7 +12,7 @@ import pl.sda.poznan.repository.TodoRepository;
 import pl.sda.poznan.service.TodoService;
 import util.PersistenceUtil;
 
-@WebServlet(name = "TodoServlet", urlPatterns = {"/todo", "/todo/create"})
+@WebServlet(name = "TodoServlet", urlPatterns = {"/todo", "/todo/create", "/todo/delete"})
 public class TodoServlet extends HttpServlet {
 
   private TodoService todoService;
@@ -28,6 +28,13 @@ public class TodoServlet extends HttpServlet {
     String path = req.getServletPath();
     if (path.equals("/todo/create")) {
       req.getRequestDispatcher("/todo/create.jsp").forward(req, resp);
+    } else if (path.equals("/todo/delete")) {
+      String id = req.getParameter("id");
+      //todo : try-catch TodoNotPresentException
+      TodoItem toDelete = todoService.getById(Long.parseLong(id));
+      System.out.println("Item to delete: " + toDelete.getTitle());
+      //todo forward to confirm delete page
+
     } else {
       List<TodoItem> allTodos = todoService.getAllTodos();
       req.setAttribute("todos", allTodos);

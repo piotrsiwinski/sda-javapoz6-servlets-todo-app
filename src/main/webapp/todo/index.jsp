@@ -28,5 +28,5 @@
         </tbody>
     </table>
 
-    <button class="btn btn-primary">Dodaj</button>
+    <a href="/todo/create" class="btn btn-primary">Dodaj</a>
 </t:wrapper>

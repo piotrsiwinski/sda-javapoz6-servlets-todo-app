@@ -44,4 +44,7 @@ public class TodoRepository {
   }
 
 
+  public void delete(Long id) {
+    //todo: Write HQL query to delete item from database
+  }
 }

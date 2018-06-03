@@ -48,13 +48,22 @@ public class TodoServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    TodoItem todoItem = new TodoItem();
-    todoItem.setTitle(req.getParameter("title"));
-    todoItem.setDescription(req.getParameter("description"));
-    // todo: parse date from request
-    //    todoItem.setStartDate();
-    todoService.save(todoItem);
-    req.getSession().setAttribute("todo_created", true);
-    resp.sendRedirect("/todo");
+    String servletPath = req.getServletPath();
+    if (servletPath.equals("/todo/create")) {
+      TodoItem todoItem = new TodoItem();
+      todoItem.setTitle(req.getParameter("title"));
+      todoItem.setDescription(req.getParameter("description"));
+      // todo: parse date from request
+      //    todoItem.setStartDate();
+      todoService.save(todoItem);
+      req.getSession().setAttribute("todo_created", true);
+      resp.sendRedirect("/todo");
+    } else if (servletPath.equals("/todo/delete")) {
+      String id = req.getParameter("id");
+      this.todoService.delete(Long.parseLong(id));
+
+
+    }
+
   }
 }

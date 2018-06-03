@@ -32,9 +32,10 @@ public class TodoServlet extends HttpServlet {
       String id = req.getParameter("id");
       //todo : try-catch TodoNotPresentException
       TodoItem toDelete = todoService.getById(Long.parseLong(id));
-      System.out.println("Item to delete: " + toDelete.getTitle());
-      //todo forward to confirm delete page
-
+      req.setAttribute("itemToDelete", toDelete);
+      req
+          .getRequestDispatcher("/todo/delete.jsp")
+          .forward(req, resp);
     } else {
       List<TodoItem> allTodos = todoService.getAllTodos();
       req.setAttribute("todos", allTodos);

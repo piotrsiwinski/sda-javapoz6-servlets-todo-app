@@ -1,10 +1,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <t:wrapper>
     <h1>Dodaj nowe zadanie</h1>
     <form action="/todo/create" method="post" class="form-horizontal">
 
+        <c:if test="${fn:length(errorMessages) gt 0}">
+            <div class="alert alert-danger">
+               Błędy walidacji:
+                <c:forEach var="error" items="${errorMessages}">
+                    <ul>
+                        <li><c:out value="${error}"/></li>
+                    </ul>
+                </c:forEach>
+            </div>
+
+        </c:if>
         <div class="form-group">
             <label for="title" class="control-label col-md-2">Tytuł</label>
             <div class="col-md-6">

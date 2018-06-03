@@ -2,11 +2,16 @@ package pl.sda.poznan.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import pl.sda.poznan.model.TodoItem;
 import pl.sda.poznan.repository.TodoRepository;
 import pl.sda.poznan.service.TodoService;
@@ -17,9 +22,11 @@ import util.PersistenceUtil;
 public class TodoServlet extends HttpServlet {
 
   private TodoService todoService;
+  private Validator validator;
 
   public TodoServlet() {
     this.todoService = new TodoService(new TodoRepository(PersistenceUtil.getEntityManager()));
+    this.validator = Validation.buildDefaultValidatorFactory().getValidator();
   }
 
   @Override
@@ -63,9 +70,19 @@ public class TodoServlet extends HttpServlet {
       todoItem.setDescription(req.getParameter("description"));
       // todo: parse date from request
       //    todoItem.setStartDate();
-      todoService.save(todoItem);
-      req.getSession().setAttribute("todo_created", true);
-      resp.sendRedirect("/todo");
+
+      Set<ConstraintViolation<TodoItem>> errors = this.validator.validate(todoItem);
+      if (errors.size() > 0) {
+        List<String> errorMessages = errors.stream()
+            .map(error -> error.getMessage())
+            .collect(Collectors.toList());
+        req.setAttribute("errorMessages", errorMessages);
+        req.getRequestDispatcher("/todo/create.jsp").forward(req, resp);
+      } else {
+        todoService.save(todoItem);
+        req.getSession().setAttribute("todo_created", true);
+        resp.sendRedirect("/todo");
+      }
     } else if (servletPath.equals("/todo/delete")) {
       String id = req.getParameter("id");
       boolean result = this.todoService.delete(Long.parseLong(id));

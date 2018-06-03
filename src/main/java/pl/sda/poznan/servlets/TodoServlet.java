@@ -60,9 +60,9 @@ public class TodoServlet extends HttpServlet {
       resp.sendRedirect("/todo");
     } else if (servletPath.equals("/todo/delete")) {
       String id = req.getParameter("id");
-      this.todoService.delete(Long.parseLong(id));
-
-
+      boolean result = this.todoService.delete(Long.parseLong(id));
+      // todo: Wyświetl wynik na stronie
+      resp.sendRedirect("/todo");
     }
 
   }

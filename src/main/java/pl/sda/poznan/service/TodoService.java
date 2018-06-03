@@ -27,7 +27,7 @@ public class TodoService {
             .orElseThrow(RuntimeException::new);
   }
 
-  public void delete(Long id) {
-    this.todoRepository.delete(id);
+  public boolean delete(Long id) {
+    return this.todoRepository.delete(id);
   }
 }

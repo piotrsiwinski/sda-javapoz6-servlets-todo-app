@@ -23,7 +23,7 @@ public class TodoRepository {
 
   public Optional<TodoItem> getById(Long id) {
     Query query = entityManager
-        .createQuery("select td from TodoItem td where td.id = :id", TodoItem.class);
+        .createQuery("select td from TodoItem td where td.id = :id");
     query.setParameter("id", id);
     try {
       TodoItem singleResult = (TodoItem) query.getSingleResult();
@@ -43,8 +43,13 @@ public class TodoRepository {
     entityManager.getTransaction().commit();
   }
 
-
-  public void delete(Long id) {
+  public boolean delete(Long id) {
     //todo: Write HQL query to delete item from database
+    entityManager.getTransaction().begin();
+    Query query = entityManager.createQuery("delete from TodoItem where id = :id");
+    query.setParameter("id", id);
+    int deletedNumber = query.executeUpdate();
+    entityManager.getTransaction().commit();
+    return deletedNumber == 1;
   }
 }

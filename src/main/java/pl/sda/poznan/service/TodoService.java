@@ -30,4 +30,8 @@ public class TodoService {
   public boolean delete(Long id) {
     return this.todoRepository.delete(id);
   }
+
+  public void update(TodoItem todoItem) {
+    this.todoRepository.update(todoItem);
+  }
 }

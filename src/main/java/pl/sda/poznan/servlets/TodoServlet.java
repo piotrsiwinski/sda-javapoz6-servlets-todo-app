@@ -12,7 +12,8 @@ import pl.sda.poznan.repository.TodoRepository;
 import pl.sda.poznan.service.TodoService;
 import util.PersistenceUtil;
 
-@WebServlet(name = "TodoServlet", urlPatterns = {"/todo", "/todo/create", "/todo/delete"})
+@WebServlet(name = "TodoServlet", urlPatterns = {"/todo", "/todo/create", "/todo/delete",
+    "/todo/edit"})
 public class TodoServlet extends HttpServlet {
 
   private TodoService todoService;
@@ -35,6 +36,13 @@ public class TodoServlet extends HttpServlet {
       req.setAttribute("itemToDelete", toDelete);
       req
           .getRequestDispatcher("/todo/delete.jsp")
+          .forward(req, resp);
+    } else if (path.equals("/todo/edit")) {
+      String id = req.getParameter("id");
+      TodoItem toEdit = todoService.getById(Long.parseLong(id));
+      req.setAttribute("itemToEdit", toEdit);
+      req
+          .getRequestDispatcher("/todo/edit.jsp")
           .forward(req, resp);
     } else {
       List<TodoItem> allTodos = todoService.getAllTodos();
@@ -62,6 +70,15 @@ public class TodoServlet extends HttpServlet {
       String id = req.getParameter("id");
       boolean result = this.todoService.delete(Long.parseLong(id));
       req.getSession().setAttribute("delete_result", result);
+      resp.sendRedirect("/todo");
+    } else if (servletPath.equals("/todo/edit")) {
+      TodoItem todoItem = new TodoItem();
+      todoItem.setId(Long.parseLong(req.getParameter("id")));
+      todoItem.setTitle(req.getParameter("title"));
+      todoItem.setDescription(req.getParameter("description"));
+      System.out.println(todoItem);
+      //todo: update entity in db
+      todoService.update(todoItem);
       resp.sendRedirect("/todo");
     }
 

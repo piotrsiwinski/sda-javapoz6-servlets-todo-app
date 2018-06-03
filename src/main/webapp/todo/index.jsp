@@ -66,7 +66,7 @@
                         <td><c:out value="${todo.title}"/></td>
                         <td><c:out value="${todo.description}"/></td>
                         <td><c:out value="${todo.startDate}"/></td>
-                        <td><a href="#">Edytuj</a> |
+                        <td><a href="/todo/edit?id=<c:out value="${todo.id}"/>">Edytuj</a> |
                             <a href="#">Szczegóły</a> |
                             <a href="/todo/delete?id=<c:out value="${todo.id}"/>">Usuń</a></td>
                     </tr>

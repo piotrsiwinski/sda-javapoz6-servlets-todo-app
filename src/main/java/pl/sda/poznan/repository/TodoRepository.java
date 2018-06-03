@@ -22,6 +22,7 @@ public class TodoRepository {
   }
 
   public Optional<TodoItem> getById(Long id) {
+//    return Optional.of(entityManager.find(TodoItem.class, id));
     Query query = entityManager
         .createQuery("select td from TodoItem td where td.id = :id");
     query.setParameter("id", id);
@@ -51,5 +52,11 @@ public class TodoRepository {
     int deletedNumber = query.executeUpdate();
     entityManager.getTransaction().commit();
     return deletedNumber == 1;
+  }
+
+  public void update(TodoItem todoItem) {
+    entityManager.getTransaction().begin();
+    entityManager.merge(todoItem);
+    entityManager.getTransaction().commit();
   }
 }

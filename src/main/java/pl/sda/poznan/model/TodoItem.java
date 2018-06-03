@@ -47,4 +47,10 @@ public class TodoItem {
   public void setStartDate(Date startDate) {
     this.startDate = startDate;
   }
+
+  @Override
+  public String toString() {
+    return String.format("TodoItem{id=%d, title='%s', description='%s', startDate=%s}", id, title,
+        description, startDate);
+  }
 }

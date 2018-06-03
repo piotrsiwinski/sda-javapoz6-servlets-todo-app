@@ -61,7 +61,7 @@ public class TodoServlet extends HttpServlet {
     } else if (servletPath.equals("/todo/delete")) {
       String id = req.getParameter("id");
       boolean result = this.todoService.delete(Long.parseLong(id));
-      // todo: Wyświetl wynik na stronie
+      req.getSession().setAttribute("delete_result", result);
       resp.sendRedirect("/todo");
     }
 

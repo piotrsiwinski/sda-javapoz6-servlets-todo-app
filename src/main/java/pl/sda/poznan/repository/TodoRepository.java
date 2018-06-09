@@ -58,6 +58,5 @@ public class TodoRepository {
     entityManager.getTransaction().begin();
     entityManager.merge(todoItem);
     entityManager.getTransaction().commit();
-    entityManager.flush();
   }
 }
